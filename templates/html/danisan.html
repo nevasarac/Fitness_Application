@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/danisan.css') }}">
+
+    <title>Sidebar Example</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="#about" style="font-size: 30px;">Danışan Paneli</a></li>
+                <li><a href="#home">Kişisel Bilgiler</a></li>
+                <li><a href="#contact">Vücut ölçüleri</a></li>
+                <li><a href="#about">Egzersiz ve Beslenme</a></li>
+                <li><a href="#services">Antrenörle Mesajlaşma</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <!-- Kişisel Bilgiler Formu -->
+            <section id="home">
+                <h2 style="font-size: 55px;">Kişisel Bilgiler</h2>
+                <form method="post" action="/kisisel_bilgi_ekle" enctype="multipart/form-data">
+                    <label for="ad">Ad Soyad:</label>
+                    <input type="text" id="ad" name="ad" required>
+
+                    <label for="sifre">Şifre:</label>
+                    <input type="text" id="sifre" name="sifre" required>
+
+                    <label for="dogum-tarihi">Doğum Tarihi:</label>
+                    <input type="date" id="dogum-tarihi" name="dogum-tarihi" required>
+
+                    <label>Cinsiyet:</label>
+                    <label for="erkek">Erkek</label>
+                    <input type="radio" id="erkek" name="cinsiyet" value="erkek">
+                    <label for="kadin">Kadın</label>
+                    <input type="radio" id="kadin" name="cinsiyet" value="kadin">
+
+                    <label for="email">E-posta:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="telefon">Telefon:</label>
+                    <input type="tel" id="telefon" name="telefon" required>
+
+                    <label for="profil-foto">Profil Fotoğrafı:</label>
+                    <input type="file" id="profil-foto" name="profil-foto" accept="image/*">
+
+                    <input type="submit" value="Bilgileri Kaydet">
+                </form>
+            </section>
+
+
+
+            <div>
+                <section id="contact">
+                    <h2 style="font-size: 55px;">Vücut Ölçüleri</h2>
+
+                    <div class="beslenme-bilgileri">
+                        {% for ilerleme_Kayitlari in ilerlemeKayitlari %}
+                            <p><strong>Kilo:</strong> {{ ilerleme_Kayitlari[2] }} Kg </p>
+                            <p><strong>Boy:</strong> {{ ilerleme_Kayitlari[3] }} cm</p>
+                            <p><strong>Yağ Oranı:</strong> %{{ ilerleme_Kayitlari[4] }} </p>
+                            <p><strong>Kas Kütlesi:</strong> {{ ilerleme_Kayitlari[5] }} KG </p>
+                            <p><strong>Vüvut İndeksi:</strong> %{{ ilerleme_Kayitlari[6] }} </p>
+                        {% endfor %}
+                    </div>
+
+                </section>
+            </div>
+
+            <div>
+                <!-- Egzersiz ve Beslenme Bilgileri -->
+                <section id="about">
+                    <h2 style="font-size: 55px;">Egzersiz ve Beslenme</h2>
+
+                    <!-- Beslenme Programı Bilgileri -->
+                    <div class="beslenme-bilgileri">
+                        <h3>Beslenme Programı</h3>
+                        {% for beslenme_programi in BeslenmeProgramlari %}
+                            <p><strong>Hedef:</strong> {{ beslenme_programi[3] }}</p>
+                            <p><strong>Günlük Öğünler:</strong> {{ beslenme_programi[7] }} öğün</p>
+                            <p><strong>Sabah:</strong> {{ beslenme_programi[4] }}</p>
+                            <p><strong>Öğle:</strong> {{ beslenme_programi[5] }}</p>
+                            <p><strong>Akşam:</strong> {{ beslenme_programi[6] }}</p>
+                            <p><strong>Kalori Hedefi:</strong> {{ beslenme_programi[8] }} kcal</p>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Egzersiz Programı Bilgileri -->
+                    <div class="egzersiz-bilgileri">
+                        <h3>Egzersiz Programı</h3>
+                        {% for egzersiz_programi in EgzersizProgramlari %}
+                            <div class="egzersiz">
+                                <p><strong>Egzersiz Adı:</strong> {{ egzersiz_programi[3] }}</p>
+                                <p><strong>Hedef:</strong> {{ egzersiz_programi[4] }}</p>
+                                <p><strong>Başlangıç Tarihi:</strong> {{ egzersiz_programi[5] }}</p>
+                                <p><strong>Program Süresi:</strong> {{ egzersiz_programi[6] }} Hafta</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+
+            <div>
+                <section id="services">
+                    <h2 style="font-size: 55px;">Antrenörle Mesajlaşma</h2>
+                    <div class="mesajlar" id="mesajlar">
+                        <!-- Mesajlar buraya eklenecek -->
+                    </div>
+                    <div class="mesaj-gonder-formu">
+                        <label for="mesaj">Mesajınız:</label>
+                        <textarea id="mesaj" rows="4" cols="50"></textarea>
+                        <button onclick="gonderMesaj()">Gönder</button>
+                    </div>
+                </section>
+            </div>
+
+            </div>
+            </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
